@@ -59,7 +59,7 @@ gulp.task('serve', ['inject'], function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-    gulp.watch(paths.src, ['inject']);
+    gulp.watch(paths.src, ['inject','inject:dist']);
 });
 
 gulp.task('html:dist', function () {

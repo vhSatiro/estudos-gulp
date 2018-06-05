@@ -1,1 +1,1 @@
-console.log('Awesome changes!');
+console.log('Awesome binas!');

@@ -21,6 +21,6 @@ production files, processed, minified.
 6. Create the tasks to minify and copy to dist ':dist' and create an 'copy:dist' to unite all of this tasks.
 7. Create the build task and use the inject:dist as an dependency.
 8. Add the HTMLclean tags over the comments on index.html <!--[htmlclean-protect]--> <!--[/htmlclean-protect]-->.
-  
+9. I've changed the function of watching to also inject to dist when a file change.  
 
 
