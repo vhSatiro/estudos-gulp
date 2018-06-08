@@ -16,6 +16,8 @@
     "gulp-htmlclean": "^2.7.22",
     "gulp-inject": "^4.3.2",
     "gulp-uglify": "^3.0.0",
-    "gulp-webserver": "^0.9.1"
+    "gulp-war": "^0.1.4",
+    "gulp-webserver": "^0.9.1",
+    "gulp-zip": "^4.1.0"
   }
 }

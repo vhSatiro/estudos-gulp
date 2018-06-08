@@ -6,6 +6,8 @@ var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
+var war = require('gulp-war');
+var zip = require('gulp-zip');
 
 var paths = {
     src: 'src/**/*',
@@ -59,7 +61,7 @@ gulp.task('serve', ['inject'], function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-    gulp.watch(paths.src, ['inject','inject:dist']);
+    gulp.watch(paths.src, ['inject', 'inject:dist', 'war']);
 });
 
 gulp.task('html:dist', function () {
@@ -70,14 +72,12 @@ gulp.task('html:dist', function () {
 
 gulp.task('css:dist', function () {
     return gulp.src(paths.srcCSS)
-        .pipe(concat('style.min.css'))
         .pipe(cleanCSS())
         .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('js:dist', function () {
     return gulp.src(paths.srcJS)
-        .pipe(concat('script.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.dist));
 });
@@ -97,4 +97,14 @@ gulp.task('build', ['inject:dist']);
 
 gulp.task('clean', function () {
     del([paths.tmp, paths.dist]);
+});
+
+gulp.task('war', function () {
+    gulp.src([paths.dist])
+        .pipe(war({
+            welcome: 'index.html',
+            displayName: 'Grunt WAR',
+        }))
+        .pipe(zip('myApp.zip'))
+        .pipe(gulp.dest("./dist"));
 });
