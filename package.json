@@ -15,6 +15,8 @@
     "gulp-concat": "^2.6.1",
     "gulp-htmlclean": "^2.7.22",
     "gulp-inject": "^4.3.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sequence": "^1.0.0",
     "gulp-uglify": "^3.0.0",
     "gulp-war": "^0.1.4",
     "gulp-webserver": "^0.9.1",

@@ -8,6 +8,7 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 var war = require('gulp-war');
 var zip = require('gulp-zip');
+var gulpSequence = require('gulp-sequence');
 
 var paths = {
     src: 'src/**/*',
@@ -61,32 +62,44 @@ gulp.task('serve', ['inject'], function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-    gulp.watch(paths.src, ['inject', 'inject:dist', 'war']);
+    gulp.watch(paths.src, function (event) {
+        gulpSequence('clean', 'copy:dist', 'copy:dist', 'inject:dist')(function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    });
 });
 
 gulp.task('html:dist', function () {
+    console.log('htmlMin');
     return gulp.src(paths.srcHTML)
         .pipe(htmlclean())
         .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('css:dist', function () {
+    console.log('cssMin');
     return gulp.src(paths.srcCSS)
         .pipe(cleanCSS())
         .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('js:dist', function () {
+    console.log('jsMin');
     return gulp.src(paths.srcJS)
         .pipe(uglify())
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('copy:dist', ['html:dist', 'css:dist', 'js:dist']);
+gulp.task('copy:dist', ['html:dist', 'css:dist', 'js:dist'], function () {
+    console.log('Copy');
+});
 
-gulp.task('inject:dist', ['copy:dist'], function () {
+gulp.task('inject:dist', function () {
     var css = gulp.src(paths.distCSS);
     var js = gulp.src(paths.distJS);
+    console.log('Inject');
     return gulp.src(paths.distIndex)
         .pipe(inject(css, { relative: true }))
         .pipe(inject(js, { relative: true }))
@@ -96,6 +109,7 @@ gulp.task('inject:dist', ['copy:dist'], function () {
 gulp.task('build', ['inject:dist']);
 
 gulp.task('clean', function () {
+    console.log('Clean');
     del([paths.tmp, paths.dist]);
 });
 
